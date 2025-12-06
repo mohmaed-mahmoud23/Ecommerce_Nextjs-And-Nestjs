@@ -62,7 +62,7 @@ export default function Navbar() {
           <Link href="/cart">
             <Button
               variant="ghost"
-              className={`relative px-4 py-2 rounded-xl font-semibold transition flex items-center gap-2
+              className={`relative px-4 py-2 rounded-xl font-semibold tran  sition flex items-center gap-2
                 ${
                   pathname === "/cart"
                     ? "bg-black text-white shadow"
@@ -71,7 +71,7 @@ export default function Navbar() {
               `}
             >
               <ShoppingCart className="w-5 h-5" />
-              cart
+              cartف
               {products.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
                   {products.length}
