@@ -33,7 +33,7 @@ addToCart: builder.mutation<AddToCartResponse, string>({
     method: "POST", 
     headers: {
       "Content-Type": "application/json",
-      token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmQ5NTI0ODRkOTUwYzkwMjNjMjBhZiIsIm5hbWUiOiJCYWIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDU5NDk4MCwiZXhwIjoxNzcyMzcwOTgwfQ.Bnb1oaIATDaCyx1loL8yJ12BXQtKIcDH8DDBaHknllA`,
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
     },
     body: {
       productId,
@@ -52,7 +52,7 @@ addToCart: builder.mutation<AddToCartResponse, string>({
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-       token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmQ5NTI0ODRkOTUwYzkwMjNjMjBhZiIsIm5hbWUiOiJCYWIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDU5NDk4MCwiZXhwIjoxNzcyMzcwOTgwfQ.Bnb1oaIATDaCyx1loL8yJ12BXQtKIcDH8DDBaHknllA`,
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
     },
   }),
 
@@ -70,7 +70,7 @@ Remov: builder.mutation<GetUserCartResponse, string>({
     method: "DELETE",         // DELETE عشان نحذف
     headers: {
       "Content-Type": "application/json",
-      token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmQ5NTI0ODRkOTUwYzkwMjNjMjBhZiIsIm5hbWUiOiJCYWIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDU5NDk4MCwiZXhwIjoxNzcyMzcwOTgwfQ.Bnb1oaIATDaCyx1loL8yJ12BXQtKIcDH8DDBaHknllA`,
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
     },
   }),
   invalidatesTags: ["Cart"], // ده عشان الصفحة تعمل تحديث تلقائي بعد الحذف
@@ -87,7 +87,7 @@ clearcart:builder.mutation<GetUserCartResponse, void>
     method: "DELETE",         // DELETE عشان نحذف
     headers: {
       "Content-Type": "application/json",
-      token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmQ5NTI0ODRkOTUwYzkwMjNjMjBhZiIsIm5hbWUiOiJCYWIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDU5NDk4MCwiZXhwIjoxNzcyMzcwOTgwfQ.Bnb1oaIATDaCyx1loL8yJ12BXQtKIcDH8DDBaHknllA`,
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
     },
   }),
   invalidatesTags: ["Cart"], // ده عشان الصفحة تعمل تحديث تلقائي بعد الحذف
@@ -104,7 +104,7 @@ updateCartItemCount: builder.mutation<GetUserCartResponse, { productId: string; 
     method: 'PUT',
     headers: {
       "Content-Type": "application/json",
-      token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmQ5NTI0ODRkOTUwYzkwMjNjMjBhZiIsIm5hbWUiOiJCYWIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDU5NDk4MCwiZXhwIjoxNzcyMzcwOTgwfQ.Bnb1oaIATDaCyx1loL8yJ12BXQtKIcDH8DDBaHknllA`,
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
     },
     body: { count }, // هنا بنبعت الـ count بس
   }),
@@ -114,6 +114,17 @@ updateCartItemCount: builder.mutation<GetUserCartResponse, { productId: string; 
 
 
 
+addAddress: builder.mutation<any, { name: string; details: string; phone: string; city: string }>({
+  query: (bodyData) => ({
+    url: "/addresses",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
+    },
+    body: bodyData,
+  }),
+}),
 
 
 
@@ -129,4 +140,5 @@ export const {
   useRemovMutation,
   useClearcartMutation,
  useUpdateCartItemCountMutation,
+ useAddAddressMutation
   } = ApiSlice;

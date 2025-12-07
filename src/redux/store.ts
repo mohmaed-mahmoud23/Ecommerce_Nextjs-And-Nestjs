@@ -1,6 +1,7 @@
 // src/store/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import { ApiSlice } from "./slices/ApiSlice";
+import addressReducer from "../redux/slices/AdreeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -8,6 +9,7 @@ export const store = configureStore({
 
 
         [ApiSlice.reducerPath]: ApiSlice.reducer,
+  address: addressReducer,
 
   },
 
