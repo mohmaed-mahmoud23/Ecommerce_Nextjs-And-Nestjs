@@ -1,33 +1,25 @@
 "use client";
-// import { toast } from "react-toastify";
 
-// import {  Star } from "lucide-react";
 import ImageGallery from "@/components/ImageGallery";
-import {
-  useGetsingelprodactQuery,
-} from "@/redux/slices/ApiSlice";
+import { useGetsingelprodactQuery } from "@/redux/slices/ApiSlice";
 import AddToCartButton from "@/components/AddToCartButton";
 import { Star } from "lucide-react";
 import SkeletonCart from "@/components/SkeletonProdactDetalis";
 
-interface Iprp {
+interface PageProps {
   params: {
     id: string;
   };
 }
 
-const Prodactdetails = ({ params }: Iprp) => {
+const Prodactdetails = ({ params }: PageProps) => {
   const { data, isLoading } = useGetsingelprodactQuery(params.id);
 
-
-  if (isLoading) return <SkeletonCart/>
+  if (isLoading) return <SkeletonCart />;
   if (!data) return <p>No product found</p>;
 
   const product = data.data;
   const inStock = product.quantity > 0;
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No product found</p>;
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -59,11 +51,9 @@ const Prodactdetails = ({ params }: Iprp) => {
             <span className="text-sm text-gray-500">
               {product.ratingsAverage}
             </span>
-
             <span className="text-sm text-gray-400">
               ({product.ratingsQuantity})
             </span>
-
             <span className="text-sm text-gray-400">{product.sold} sold</span>
           </div>
 
@@ -101,9 +91,7 @@ const Prodactdetails = ({ params }: Iprp) => {
             {inStock ? `Stock: ${product.quantity} available` : "Out of Stock"}
           </p>
 
-      
-            <AddToCartButton productId={product._id} disabled={!inStock} />
-          
+          <AddToCartButton productId={product._id} disabled={!inStock} />
         </div>
       </div>
     </div>

@@ -109,7 +109,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center `bg-gradient-to-br` from-gray-100 to-gray-200 px-4 py-10">
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
