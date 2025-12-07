@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -36,7 +36,6 @@ const Page = () => {
   const searchParams = useSearchParams();
   const fromCart = searchParams.get("from") === "cart";
 
-  const router = useRouter();
   const [addAddress, { isLoading }] = useAddAddressMutation();
   const { data } = useFetchDataCartQuery();
 
@@ -53,7 +52,7 @@ const Page = () => {
     setMessage("");
 
     try {
-      const res: any = await addAddress(formData).unwrap();
+      const res = await addAddress(formData).unwrap();
       setMessage("Address added successfully!");
       reset();
 
@@ -78,15 +77,27 @@ const Page = () => {
           }
         );
 
-        const resData = await response.json();
-        if (resData.session?.url) {
-          window.location.href = resData.session.url;
+        const resData: unknown = await response.json();
+
+        if (
+          typeof resData === "object" &&
+          resData !== null &&
+          "session" in resData &&
+          (resData as any).session?.url
+        ) {
+          window.location.href = (resData as any).session.url;
         } else {
           toast.error("No checkout URL returned");
         }
       }
-    } catch (err: any) {
-      setMessage(err?.data?.message || "Something went wrong");
+    } catch (err: unknown) {
+      const errorMessage =
+        typeof err === "object" &&
+        err !== null &&
+        "data" in err &&
+        (err as any).data?.message;
+
+      setMessage(errorMessage || "Something went wrong");
     }
   };
 
