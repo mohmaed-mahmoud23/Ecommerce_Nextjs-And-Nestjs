@@ -7,6 +7,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+interface CheckoutResponse {
+  session?: {
+    url?: string;
+  };
+}
+
 import {
   useAddAddressMutation,
   useFetchDataCartQuery,
@@ -52,7 +58,7 @@ const Page = () => {
     setMessage("");
 
     try {
-      const res = await addAddress(formData).unwrap();
+      await addAddress(formData).unwrap();
       setMessage("Address added successfully!");
       reset();
 
@@ -77,15 +83,10 @@ const Page = () => {
           }
         );
 
-        const resData: unknown = await response.json();
+        const resData: CheckoutResponse = await response.json();
 
-        if (
-          typeof resData === "object" &&
-          resData !== null &&
-          "session" in resData &&
-          (resData as any).session?.url
-        ) {
-          window.location.href = (resData as any).session.url;
+        if (resData.session?.url) {
+          window.location.href = resData.session.url;
         } else {
           toast.error("No checkout URL returned");
         }
@@ -103,7 +104,6 @@ const Page = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 px-4 py-10">
-      {/* Animated Container */}
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -134,13 +134,7 @@ const Page = () => {
               <input
                 type="text"
                 {...register(field as keyof IFormInputs)}
-                className="
-                  w-full px-4 py-2 rounded-lg border border-gray-300
-                  focus:border-blue-600 focus:ring-2 focus:ring-blue-300
-                  transition outline-none
-                  bg-white shadow-sm
-                  hover:shadow-md
-                "
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-300 transition outline-none bg-white shadow-sm hover:shadow-md"
                 placeholder={`Enter ${field}`}
               />
 

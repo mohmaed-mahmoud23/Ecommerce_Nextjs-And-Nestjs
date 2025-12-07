@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { ProductsResponse, SingleProductResponse } from '@/types/ApiResponse';
 import { AddToCartResponse, GetUserCartResponse } from '@/interfaces/Cart';
+import { AddAddressResponse } from '@/interfaces/Addres';
 
 export const ApiSlice = createApi({
   reducerPath: 'productsApi',
@@ -114,7 +115,7 @@ updateCartItemCount: builder.mutation<GetUserCartResponse, { productId: string; 
 
 
 
-addAddress: builder.mutation<any, { name: string; details: string; phone: string; city: string }>({
+addAddress: builder.mutation<AddAddressResponse, { name: string; details: string; phone: string; city: string }>({
   query: (bodyData) => ({
     url: "/addresses",
     method: "POST",
