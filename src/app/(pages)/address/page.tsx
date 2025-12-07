@@ -92,13 +92,19 @@ const Page = () => {
         }
       }
     } catch (err: unknown) {
-      const errorMessage =
+      let errorMessage = "Something went wrong";
+
+      if (
         typeof err === "object" &&
         err !== null &&
         "data" in err &&
-        (err as any).data?.message;
+        typeof (err as { data?: { message?: string } }).data?.message ===
+          "string"
+      ) {
+        errorMessage = (err as { data?: { message?: string } }).data!.message!;
+      }
 
-      setMessage(errorMessage || "Something went wrong");
+      setMessage(errorMessage);
     }
   };
 
