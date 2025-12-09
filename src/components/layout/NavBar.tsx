@@ -137,7 +137,7 @@ export default function Navbar() {
               `}
             >
               <ShoppingCart className="w-5 h-5" />
-              Carta
+              Cart
               {products.length > 0 && (
                 <span className="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
                   {products.length}
