@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Menu, ShoppingCart } from "lucide-react";
-import { Button } from "../ui/Button";
+import { Button } from "../../components/ui/Button"
 import { useFetchDataCartQuery } from "@/redux/slices/ApiSlice";
 
 export default function Navbar() {

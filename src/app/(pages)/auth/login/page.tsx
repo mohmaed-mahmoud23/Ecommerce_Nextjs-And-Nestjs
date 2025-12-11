@@ -162,7 +162,7 @@ export default function BugReportForm() {
                 className="relative overflow-hidden font-bold"
               >
                 <motion.span
-                  className="absolute inset-0` bg-gradient-to-r` from-black via-gray-700 to-black opacity-20"
+                  className="absolute inset-0 `bg-gradient-to-r` from-black via-gray-700 to-black opacity-20"
                   animate={{ x: ["-100%", "100%"] }}
                   transition={{
                     duration: 1.8,
