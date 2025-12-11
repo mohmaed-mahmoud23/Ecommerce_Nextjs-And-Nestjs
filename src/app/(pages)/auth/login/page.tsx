@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { signIn } from "next-auth/react";
-import { Button } from "../../../../components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
