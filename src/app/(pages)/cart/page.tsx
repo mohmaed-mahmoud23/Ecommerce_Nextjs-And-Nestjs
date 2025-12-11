@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import SkeletonProductCard from "@/components/SkeletonProductCard";
 
 export default function Pagecart() {
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  // const [checkoutLoading, setCheckoutLoading] = useState(false);
   const router = useRouter(); // ✅ هنا بنجيب الـ router
 
   const { data, isLoading } = useFetchDataCartQuery();
@@ -84,51 +84,7 @@ export default function Pagecart() {
   };
 
   // ✅ تعديل الـ checkout function
-  const handleCheckout = async () => {
-    const cartId = data?.cartId;
 
-    if (!cartId) {
-      toast.error("Cart ID not found!");
-      return;
-    }
-
-    try {
-      setCheckoutLoading(true); // 🔥 Start Loading
-
-      const response = await fetch(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:3000`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
-          },
-          body: JSON.stringify({
-            shippingAddress: {
-              details: "details",
-              phone: "01010700999",
-              city: "Cairo",
-            },
-          }),
-        }
-      );
-
-      if (!response.ok) throw new Error("Checkout failed");
-
-      const resData = await response.json();
-
-      if (resData.session?.url) {
-        window.location.href = resData.session.url;
-      } else {
-        toast.error("No checkout URL returned");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to start checkout session");
-    } finally {
-      setCheckoutLoading(false); // 🔥 Stop Loading
-    }
-  };
 
   if (removing || isLoading) return <SkeletonProductCard />;
 
@@ -260,10 +216,10 @@ export default function Pagecart() {
 
               router.push("/address?from=cart");
             }}
-            disabled={checkoutLoading}
+   
             className="w-full py-4 md:py-6 text-base md:text-lg rounded-xl"
           >
-            {checkoutLoading ? "Processing..." : "Proceed to Checkout"}
+            Proceed to Checkout
           </Button>
 
           <Button

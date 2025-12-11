@@ -1,152 +1,119 @@
 "use client";
 
-import { Search, User, Menu, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../ui/Button";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { User, Menu, ShoppingCart } from "lucide-react";
+import { Button } from "../ui/Button";
 import { useFetchDataCartQuery } from "@/redux/slices/ApiSlice";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { data } = useFetchDataCartQuery();
   const products = data?.data?.products || [];
 
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Products", href: "/ProdactPage" },
+    { name: "Cart", href: "/cart" },
+    { name: "Login", href: "/auth/login" },
+  ];
 
   return (
-    <nav className="bg-white text-black px-5 py-4 shadow-md sticky top-0 z-50">
-      <div className="flex justify-between items-center">
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
-          <h1 className="text-2xl font-bold tracking-wide cursor-pointer">
-            TeckMart
-          </h1>
+  <motion.h1
+  initial={{ scale: 1, opacity: 1 }}
+  animate={{
+    scale: [1, 1.5, 0.5, 1],       // يكبر – يصغر – يرجع
+    opacity: [1, 0.3, 0.3, 1],     // شفاف شوية – يرجع
+  }}
+  transition={{
+    duration: 5,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="text-2xl md:text-3xl font-bold tracking-wide cursor-pointer text-black"
+>
+  TeckMart
+</motion.h1>
+
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex gap-6 items-center">
-          {/* Home */}
-          <Link href="/">
-            <Button
-              variant="ghost"
-              className={`px-4 py-2 rounded-xl font-semibold transition
-                ${
-                  pathname === "/"
-                    ? "bg-black text-white shadow"
-                    : "hover:bg-black hover:text-white"
-                }
-              `}
-            >
-              Home
-            </Button>
-          </Link>
-
-          {/* Products */}
-          <Link href="/ProdactPage">
-            <Button
-              variant="ghost"
-              className={`px-4 py-2 rounded-xl font-semibold transition
-                ${
-                  pathname === "/ProdactPage"
-                    ? "bg-black text-white shadow"
-                    : "hover:bg-black hover:text-white"
-                }
-              `}
-            >
-              Products
-            </Button>
-          </Link>
-
-          {/* Cart */}
-          <Link href="/cart">
-            <Button
-              variant="ghost"
-              className={`relative px-4 py-2 rounded-xl font-semibold tran  sition flex items-center gap-2
-                ${
-                  pathname === "/cart"
-                    ? "bg-black text-white shadow"
-                    : "hover:bg-black hover:text-white"
-                }
-              `}
-            >
-              <ShoppingCart className="w-5 h-5" />
-              cart  
-              {products.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
-                  {products.length}
-                </span>
-              )}
-            </Button>
-          </Link>
+        <div className="hidden md:flex items-center gap-6">
+          {menuItems.map((item) => (
+            <Link key={item.name} href={item.href}>
+              <Button
+                variant="ghost"
+                className={`px-4 py-2 rounded-xl font-semibold transition flex items-center gap-2
+                  ${
+                    pathname === item.href
+                      ? "bg-black text-white shadow-lg"
+                      : "hover:bg-black hover:text-white"
+                  }`}
+              >
+                {item.name === "Cart" && <ShoppingCart className="w-5 h-5" />}
+                {item.name}
+                {item.name === "Cart" && products.length > 0 && (
+                  <span className="ml-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
+                    {products.length}
+                  </span>
+                )}
+              </Button>
+            </Link>
+          ))}
         </div>
 
-        {/* Icons + Mobile Menu Button */}
-        <div className="flex items-center gap-4 text-xl">
-          <Search className="cursor-pointer hover:text-gray-600 transition" />
+        {/* Icons */}
+        <div className="flex items-center gap-4 text-xl md:hidden">
           <User className="cursor-pointer hover:text-gray-600 transition" />
           <Menu
-            className="cursor-pointer md:hidden hover:text-gray-600 transition"
-            onClick={() => setOpen(!open)}
+            className="cursor-pointer hover:text-gray-600 transition"
+            onClick={() => setOpenMenu(!openMenu)}
           />
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {open && (
-        <div className="mt-4 flex flex-col gap-3 md:hidden pb-3">
-          <Link href="/">
-            <Button
-              variant="outline"
-              className={`w-full px-4 py-2 rounded-xl font-semibold transition
-                ${
-                  pathname === "/"
-                    ? "bg-black text-white"
-                    : "hover:bg-black hover:text-white"
-                }
-              `}
-            >
-              Home
-            </Button>
-          </Link>
-
-          <Link href="/ProdactPage">
-            <Button
-              variant="outline"
-              className={`w-full px-4 py-2 rounded-xl font-semibold transition
-                ${
-                  pathname === "/ProdactPage"
-                    ? "bg-black text-white"
-                    : "hover:bg-black hover:text-white"
-                }
-              `}
-            >
-              Products
-            </Button>
-          </Link>
-
-          <Link href="/cart">
-            <Button
-              variant="outline"
-              className={`w-full flex items-center gap-2 px-4 py-2 rounded-xl font-semibold transition
-                ${
-                  pathname === "/cart"
-                    ? "bg-black text-white"
-                    : "hover:bg-black hover:text-white"
-                }
-              `}
-            >
-              <ShoppingCart className="w-5 h-5" />
-              Cart
-              {products.length > 0 && (
-                <span className="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
-                  {products.length}
-                </span>
-              )}
-            </Button>
-          </Link>
-        </div>
-      )}
+      <AnimatePresence>
+        {openMenu && (
+          <motion.div
+            className="flex flex-col gap-3 md:hidden shadow-md pb-4 px-5"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            {menuItems.map((item) => (
+              <Link key={item.name} href={item.href}>
+                <Button
+                  variant="outline"
+                  className={`w-full px-4 py-2 rounded-xl font-semibold transition flex items-center gap-2
+                    ${
+                      pathname === item.href
+                        ? "bg-black text-white"
+                        : "hover:bg-black hover:text-white"
+                    }`}
+                >
+                  {item.name === "Cart" && <ShoppingCart className="w-5 h-5" />}
+                  {item.name}
+                  {item.name === "Cart" && products.length > 0 && (
+                    <span className="ml-auto bg-red-600 text-white text-xs px-1 py-0.5 rounded-full">
+                      {products.length}
+                    </span>
+                  )}
+                </Button>
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

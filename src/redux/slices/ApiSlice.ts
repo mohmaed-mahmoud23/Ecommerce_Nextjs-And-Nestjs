@@ -9,7 +9,7 @@ tagTypes: ['Product', 'Cart'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ecommerce.routemisr.com/api/v1',
   }),
-  endpoints: (builder) => ({
+  endpoints: (builder) => ({  
     // كل المنتجات
     getAllProducts: builder.query<ProductsResponse, void>({
       query: () => '/products',
@@ -130,6 +130,10 @@ addAddress: builder.mutation<AddAddressResponse, { name: string; details: string
 
 
 
+
+
+
+
   }), 
 }); 
 
@@ -141,5 +145,5 @@ export const {
   useRemovMutation,
   useClearcartMutation,
  useUpdateCartItemCountMutation,
- useAddAddressMutation
+ useAddAddressMutation,
   } = ApiSlice;

@@ -9,3 +9,15 @@
     _id: string;
   };
 }
+
+
+
+
+ export interface email {
+email:string,
+password:string
+}
+
+
+
+
