@@ -1,55 +1,69 @@
-import NextAuth from "next-auth"
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
-providers: [
-  CredentialsProvider({
-    // The name to display on the sign in form (e.g. "Sign in with...")
-    name: "Credentials",
-    // `credentials` is used to generate a form on the sign in page.
-    // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-    // e.g. domain, username, password, 2FA token, etc.
-    // You can pass any HTML attribute to the <input> tag through the object.
-  credentials: {
-  username: { label: "email", type: "email", placeholder: "example@gmail.com" },
-  password: { label: "Password", type: "password", placeholder: "••••••••" }
-}
-,
-   async authorize(credentials) {
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Email", type: "email", placeholder: "example@gmail.com" },
+        password: { label: "Password", type: "password" },
+      },
 
-  const res = await fetch("https://ecommerce.routemisr.com/api/v1/auth/signin", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: credentials?.username,
-      password: credentials?.password,
+      async authorize(credentials) {
+        const res = await fetch("https://ecommerce.routemisr.com/api/v1/auth/signin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: credentials?.username,
+            password: credentials?.password,
+          }),
+        });
+
+        const data = await res.json();
+        console.log("API Response:", data);
+
+        if (res.ok && data?.user) {
+          return {
+            id: data.user._id,
+            name: data.user.name,
+            email: data.user.email,
+            token: data.token, // التوكين هنا
+            role: data.user.role,
+          };
+        }
+
+        return null;
+      },
     }),
-  });
+  ],
 
-  const data = await res.json(); // هنا بنجيب بيانات المستخدم من السيرفر
-console.log(data)
-  if (res.ok && data) {
-    // هنا لازم ترجّع object فيه id و email و name على الأقل
-    return {
-      id: data.user.id,
-      name: data.user.name,
-      email: data.user.email,
-      token: data.token, // لو عندك token من السيرفر
-    };
+  pages: {
+    signIn: "/auth/login",
+  },
+
+callbacks: {
+  async session({ session, token }) {
+    session.user.role = token.role as string;
+    session.token = token.accessToken as string;
+
+    return session;
+  },
+  async jwt({ token, user }) {
+    if (user) {
+      token.accessToken = user.token;
+      token.token = user.token as string
+    }
+
+    return token;
   }
-
-  return null; // لو login فشل
-} 
-
-  })
-],
-pages:{
-  signIn :"/auth/login"
-  
 },
+secret: process.env.AUTH_SECRET,
+session: {
+  strategy: 'jwt'
+}
 
 
+});
 
-})
-
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };

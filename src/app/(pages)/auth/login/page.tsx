@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+ import Link from "next/link"
 
 const formSchema = z.object({
   email: z
@@ -173,6 +174,9 @@ export default function BugReportForm() {
                 <span className="relative">Submit</span>
               </Button>
             </motion.div>
+          </CardFooter>
+          <CardFooter className="text-center text-sm text-gray-950">
+            <Link href={"/auth/register"}> Dont have an account? Regester</Link>
           </CardFooter>
         </Card>
       </motion.div>
