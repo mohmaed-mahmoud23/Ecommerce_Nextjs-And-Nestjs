@@ -78,7 +78,7 @@ export default function Navbar() {
   // Handle Cart click
   const handleCartClick = () => {
     if (!session) {
-      toast.error("لازم تعمل تسجيل دخول عشان تروح للكارد");
+toast.error("You must log in to go to the cart requierd !!");
       router.push("/auth/login"); // ريديركت للصفحة الرئيسية
 
       return;
