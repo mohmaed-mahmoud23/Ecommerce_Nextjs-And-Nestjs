@@ -1,15 +1,24 @@
+"use client";
+
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="pt-16 pb-10">
+    <motion.footer
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="pt-16 pb-10 bg-white"
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* TOP */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* BRAND */}
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-extrabold text-xl shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-extrabold text-xl shadow-md">
                 T
               </div>
               <h2 className="text-2xl font-bold tracking-wide text-black">
@@ -29,18 +38,15 @@ export default function Footer() {
             </div>
 
             <div className="flex gap-3 mt-6">
-              <a className="p-2 rounded-lg bg-black/5 hover:bg-black/10 transition text-black">
-                <Facebook size={18} />
-              </a>
-              <a className="p-2 rounded-lg bg-black/5 hover:bg-black/10 transition text-black">
-                <Twitter size={18} />
-              </a>
-              <a className="p-2 rounded-lg bg-black/5 hover:bg-black/10 transition text-black">
-                <Instagram size={18} />
-              </a>
-              <a className="p-2 rounded-lg bg-black/5 hover:bg-black/10 transition text-black">
-                <Youtube size={18} />
-              </a>
+              {[Facebook, Twitter, Instagram, Youtube].map((Icon, i) => (
+                <motion.a
+                  key={i}
+                  whileHover={{ scale: 1.1 }}
+                  className="p-2 rounded-lg bg-black/5 hover:bg-black/10 transition text-black cursor-pointer"
+                >
+                  <Icon size={18} />
+                </motion.a>
+              ))}
             </div>
           </div>
 
@@ -48,11 +54,20 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4 text-black">Shop</h3>
             <ul className="space-y-3 text-gray-700">
-              <li className="hover:text-black transition">Electronics</li>
-              <li className="hover:text-black transition">Fashion</li>
-              <li className="hover:text-black transition">Home & Garden</li>
-              <li className="hover:text-black transition">Sports</li>
-              <li className="hover:text-black transition">Deals</li>
+              {[
+                "Electronics",
+                "Fashion",
+                "Home & Garden",
+                "Sports",
+                "Deals",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="hover:text-black transition cursor-pointer"
+                >
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -62,11 +77,20 @@ export default function Footer() {
               Customer Service
             </h3>
             <ul className="space-y-3 text-gray-700">
-              <li className="hover:text-black transition">Contact Us</li>
-              <li className="hover:text-black transition">Help Center</li>
-              <li className="hover:text-black transition">Track Order</li>
-              <li className="hover:text-black transition">Returns</li>
-              <li className="hover:text-black transition">Shipping Info</li>
+              {[
+                "Contact Us",
+                "Help Center",
+                "Track Order",
+                "Returns",
+                "Shipping Info",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="hover:text-black transition cursor-pointer"
+                >
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -74,11 +98,20 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4 text-black">About</h3>
             <ul className="space-y-3 text-gray-700">
-              <li className="hover:text-black transition">Our Story</li>
-              <li className="hover:text-black transition">Careers</li>
-              <li className="hover:text-black transition">Press</li>
-              <li className="hover:text-black transition">Investors</li>
-              <li className="hover:text-black transition">Sustainability</li>
+              {[
+                "Our Story",
+                "Careers",
+                "Press",
+                "Investors",
+                "Sustainability",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="hover:text-black transition cursor-pointer"
+                >
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -88,20 +121,19 @@ export default function Footer() {
           <p>© 2024 TechMart. All rights reserved.</p>
 
           <div className="flex gap-6">
-            <span className="hover:text-black transition cursor-pointer">
-              Privacy Policy
-            </span>
-            <span className="hover:text-black transition cursor-pointer">
-              Terms
-            </span>
-            <span className="hover:text-black transition cursor-pointer">
-              Cookies
-            </span>
+            {["Privacy Policy", "Terms", "Cookies"].map((item) => (
+              <span
+                key={item}
+                className="hover:text-black transition cursor-pointer"
+              >
+                {item}
+              </span>
+            ))}
           </div>
 
           <p>Powered by Next.js ⚡</p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

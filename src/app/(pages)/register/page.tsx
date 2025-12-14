@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 /* =======================
    Schema
@@ -48,6 +49,7 @@ const registerSchema = z
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
 
   const form = useForm<RegisterFormValues>({
@@ -62,15 +64,16 @@ export default function RegisterPage() {
   });
 
   /* =======================
-      Submit
-  ======================= */
+     Submit Handler
+  ======================== */
   async function onSubmit(values: RegisterFormValues) {
+    setIsLoading(true);
     try {
       const payload = {
         name: values.name,
         email: values.email,
         password: values.password,
-        rePassword: values.rePassword, // 🔥 لازم تتبعت
+        rePassword: values.rePassword,
         phone: values.phone.startsWith("0")
           ? `20${values.phone.slice(1)}`
           : values.phone.startsWith("+")
@@ -101,18 +104,20 @@ export default function RegisterPage() {
       } else {
         toast.error("Something went wrong");
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
   /* =======================
       UI
-  ======================= */
+  ======================== */
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center mt-3"
     >
       <Card className="w-full max-w-md p-6 rounded-2xl shadow-xl bg-white/80 backdrop-blur">
         <CardHeader>
@@ -170,21 +175,6 @@ export default function RegisterPage() {
                 )}
               />
 
-              {/* Phone */}
-              <Controller
-                name="phone"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Phone</FieldLabel>
-                    <Input {...field} placeholder="+2010xxxxxxxx" />
-                    {fieldState.error && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
-
               {/* Confirm Password */}
               <Controller
                 name="rePassword"
@@ -199,16 +189,52 @@ export default function RegisterPage() {
                   </Field>
                 )}
               />
+
+              {/* Phone */}
+              <Controller
+                name="phone"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>Phone</FieldLabel>
+                    <Input {...field} placeholder="+2010xxxxxxxx" />
+                    {fieldState.error && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
             </FieldGroup>
 
-            <Button type="submit" className="w-full mt-6">
-              Create Account
-            </Button>
+            {/* Submit Button */}
+            <div className="mt-4 flex justify-between items-center">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => form.reset()}
+              >
+                Reset
+              </Button>
+
+              <Button
+                type="submit"
+                className="flex items-center gap-2"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="animate-spin w-5 h-5" /> Loading...
+                  </>
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </div>
           </form>
         </CardContent>
 
         <CardFooter className="text-center text-sm text-gray-500">
-          <Link href={"/auth/login"}> Already have an account? Login</Link>
+          <Link href={"/auth/login"}>Already have an account? Login</Link>
         </CardFooter>
       </Card>
     </motion.div>

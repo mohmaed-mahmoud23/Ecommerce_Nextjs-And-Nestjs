@@ -1,4 +1,5 @@
 "use client";
+import { getSession } from "next-auth/react";
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
@@ -45,6 +46,8 @@ const Page = () => {
   const [addAddress, { isLoading }] = useAddAddressMutation();
   const { data } = useFetchDataCartQuery();
 
+
+
   const {
     register,
     handleSubmit,
@@ -69,13 +72,22 @@ const Page = () => {
           return;
         }
 
+
+
+        const session = await getSession();
+
+        if (!session?.token) {
+          toast.error("You must login first!");
+          return;
+        }
+
         const response = await fetch(
           `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:3000/`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzRjMmYzOTFkMWE3Yzk1ZmRhOGUyMCIsIm5hbWUiOiJaWHp6Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUwNjU1MDMsImV4cCI6MTc3Mjg0MTUwM30.lJB-L7gsSA_o4FOJIN037hnGRUhfgQd4cKgphoP7vAU`,
+              token: session.token,
             },
             body: JSON.stringify({
               shippingAddress: formData,

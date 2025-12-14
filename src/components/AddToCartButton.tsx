@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/Button";
@@ -14,24 +15,32 @@ interface AddToCartButtonProps {
 }
 
 const AddToCartButton = ({ productId, disabled }: AddToCartButtonProps) => {
+  const { data: session } = useSession();
+
   const { data: cartData } = useFetchDataCartQuery();
   const [addToCart, { isLoading }] = useAddToCartMutation();
 
-  const handleClick = () => {
-    const isInCart = cartData?.data?.products?.some(
-      (item) => item.product._id === productId
-    );
+const handleClick = () => {
+  if (!session?.token) {
+    toast.warning("Please login first to add items to cart");
+    return;
+  }
 
-    if (isInCart) {
-      toast.info("Product already in your cart");
-      return;
-    }
+  const isInCart = cartData?.data?.products?.some(
+    (item) => item.product._id === productId
+  );
 
-    addToCart(productId)
-      .unwrap()
-      .then(() => toast.success("Added to cart"))
-      .catch(() => toast.error("Something went wrong!"));
-  };
+  if (isInCart) {
+    toast.info("Product already in your cart");
+    return;
+  }
+
+  addToCart(productId)
+    .unwrap()
+    .then(() => toast.success("Added to cart"))
+    .catch(() => toast.error("Something went wrong!"));
+};
+
 
   return (
     <Button

@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
  import Link from "next/link"
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z
@@ -34,6 +35,8 @@ const formSchema = z.object({
 });
 
 export default function BugReportForm() {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -45,6 +48,8 @@ export default function BugReportForm() {
   });
 
   async function onSubmit(data: { email: string; password: string }) {
+      setIsLoading(true);
+
     const res = await signIn("credentials", {
       username: data.email,
       password: data.password,
@@ -59,6 +64,8 @@ export default function BugReportForm() {
     } else {
       toast.error("Invalid email or password");
     }
+      setIsLoading(false);
+
   }
 
   return (
@@ -161,17 +168,15 @@ export default function BugReportForm() {
                 type="submit"
                 form="form-rhf-demo"
                 className="relative overflow-hidden font-bold"
+                disabled={isLoading}
               >
-                <motion.span
-                  className="absolute inset-0 `bg-gradient-to-r` from-black via-gray-700 to-black opacity-20"
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{
-                    duration: 1.8,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <span className="relative">Submit</span>
+                {isLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="animate-spin w-5 h-5" /> Loading...
+                  </span>
+                ) : (
+                  <span className="relative">Submit</span>
+                )}
               </Button>
             </motion.div>
           </CardFooter>
