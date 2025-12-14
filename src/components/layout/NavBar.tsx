@@ -7,7 +7,7 @@ import { User, Menu, ShoppingCart, LogOut, LogIn } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { useFetchDataCartQuery } from "@/redux/slices/ApiSlice";
 import { useSession, signOut } from "next-auth/react";
-import { toast, Toaster } from "react-hot-toast";
+import toast, {  Toaster } from "react-hot-toast";
 
 export default function Navbar() {
   const pathname = usePathname();
