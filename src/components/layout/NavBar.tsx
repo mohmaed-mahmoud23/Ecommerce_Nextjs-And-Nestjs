@@ -39,11 +39,19 @@ export default function NavbarMinimal() {
     if (status === "loading") return <p>Loading...</p>;
 
     return (
-      <div className="flex items-center gap-3 ml-4">
+      <div className="flex items-center gap-3 ml-4 cursor-pointer">
         {status === "authenticated" && (
           <>
-            <User className="w-5 h-5" />
-            <span className="font-medium">{session?.user?.name}</span>
+            {/* أيقونة المستخدم دلوقتي تبقى clickable */}
+            <div
+              className="flex items-center gap-2"
+              onClick={() => router.push("/allorders")}
+            >
+              <User className="w-5 h-5 text-gray-700 hover:text-indigo-600 transition-colors" />
+              <span className="font-medium hover:text-indigo-600 transition-colors">
+                {session?.user?.name}
+              </span>
+            </div>
           </>
         )}
 

@@ -3,10 +3,11 @@ import type { ProductsResponse, SingleProductResponse } from '@/types/ApiRespons
 import { AddToCartResponse, GetUserCartResponse } from '@/interfaces/Cart';
 import { AddAddressResponse } from '@/interfaces/Addres';
 import { getSession } from "next-auth/react";
+import { Order } from '@/interfaces/Order';
 
 export const ApiSlice = createApi({
   reducerPath: 'productsApi',
-tagTypes: ['Product', 'Cart'],
+  tagTypes: ["Product", "Cart", "Order"], // 👈 ضيف Order
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ecommerce.routemisr.com/api/v1',
 
@@ -129,7 +130,10 @@ addAddress: builder.mutation<AddAddressResponse, { name: string; details: string
 
 
 
-
+getUserorder: builder.query<Order[], string>({
+  query: (id) => `/orders/user/${id}`,
+  providesTags: ["Order"],
+}),
 
 
 
@@ -145,4 +149,5 @@ export const {
   useClearcartMutation,
  useUpdateCartItemCountMutation,
  useAddAddressMutation,
+ useGetUserorderQuery,
   } = ApiSlice;

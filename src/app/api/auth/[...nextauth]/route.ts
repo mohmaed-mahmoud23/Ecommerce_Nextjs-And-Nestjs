@@ -1,6 +1,15 @@
+
+import {jwtDecode} from "jwt-decode";
 export const runtime = "nodejs";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+interface DecodedToken {
+  id: string;
+  name: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 
 const handler = NextAuth({
   providers: [
@@ -25,8 +34,13 @@ const handler = NextAuth({
         console.log("API Response:", data);
 
         if (res.ok && data?.user) {
+
+const decoded = jwtDecode<DecodedToken>(data.token)
+
+
+
           return {
-            id: data.user._id,
+    id: decoded.id as string  ,    // ✅ اتجاب من التوكين
             name: data.user.name,
             email: data.user.email,
             token: data.token, // التوكين هنا
@@ -44,15 +58,20 @@ const handler = NextAuth({
   },
 
 callbacks: {
-  async session({ session, token }) {
-    session.user.role = token.role as string;
-    session.token = token.token as string;
+async session({ session, token }) {
+  session.user.id = token.id as string;
+  session.user.role = token.role as string;
+  session.token = token.token as string;
+  console.log("SESSION:", session);
+  return session;
 
-    return session;
-  },
+},
   async jwt({ token, user }) {
     if (user) {
-      token.accessToken = user.token;
+
+          token.id = user.id
+    token.role = user.role as string; // 🔥 المهم
+
       token.token = user.token as string
     }
 
