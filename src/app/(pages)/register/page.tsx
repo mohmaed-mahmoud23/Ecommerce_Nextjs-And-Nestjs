@@ -33,13 +33,12 @@ const registerSchema = z
     email: z.string().email("Invalid email"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     rePassword: z.string().min(6, "Confirm password is required"),
-  phone: z
-  .string()
-  .regex(
-    /^(?:\+20|20|0)?1[0125][0-9]{8}$/,
-    "Enter a valid Egyptian phone number"
-  ),
-
+    phone: z
+      .string()
+      .regex(
+        /^(?:\+20|20|0)?1[0125][0-9]{8}$/,
+        "Enter a valid Egyptian phone number"
+      ),
   })
   .refine((data) => data.password === data.rePassword, {
     message: "Passwords do not match",
@@ -67,18 +66,17 @@ export default function RegisterPage() {
   ======================= */
   async function onSubmit(values: RegisterFormValues) {
     try {
-    const payload = {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-      rePassword: values.rePassword, // 🔥 لازم تتبعت
-      phone: values.phone.startsWith("0")
-        ? `20${values.phone.slice(1)}`
-        : values.phone.startsWith("+")
-        ? values.phone.replace("+", "")
-        : values.phone,
-    };
-
+      const payload = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        rePassword: values.rePassword, // 🔥 لازم تتبعت
+        phone: values.phone.startsWith("0")
+          ? `20${values.phone.slice(1)}`
+          : values.phone.startsWith("+")
+          ? values.phone.replace("+", "")
+          : values.phone,
+      };
 
       const res = await fetch(
         "https://ecommerce.routemisr.com/api/v1/auth/signup",

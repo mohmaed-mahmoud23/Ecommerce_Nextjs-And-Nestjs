@@ -176,7 +176,7 @@ export default function BugReportForm() {
             </motion.div>
           </CardFooter>
           <CardFooter className="text-center text-sm text-gray-950">
-            <Link href={"/auth/register"}> Dont have an account? Regester</Link>
+            <Link href={"/register"}> Dont have an account? Regester</Link>
           </CardFooter>
         </Card>
       </motion.div>
