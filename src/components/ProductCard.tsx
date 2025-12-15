@@ -12,7 +12,7 @@
 
   export default function ProductCard({ prodact }: ProductCardProps) {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col"> 
         <Card className="max-w-full rounded-xl overflow-hidden border bg-white shadow hover:shadow-lg transition-all duration-300">
           {/* Image */}
           <div className="relative h-[220px] bg-gray-50">

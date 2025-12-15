@@ -4,7 +4,6 @@ import { AddToCartResponse, GetUserCartResponse } from '@/interfaces/Cart';
 import { AddAddressResponse } from '@/interfaces/Addres';
 import { getSession } from "next-auth/react";
 import { Order } from '@/interfaces/Order';
-import { Category } from '@/interfaces/Category';
 
 export const ApiSlice = createApi({
   reducerPath: 'productsApi',
@@ -31,7 +30,7 @@ export const ApiSlice = createApi({
   endpoints: (builder) => ({  
     // كل المنتجات
     getAllProducts: builder.query<ProductsResponse, void>({
-      query: () => '/categories',
+      query: () => '/products',
       providesTags: ['Product'],
     }),
 

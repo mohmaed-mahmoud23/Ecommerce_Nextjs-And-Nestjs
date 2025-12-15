@@ -5,7 +5,6 @@ import { useGetAllProductsQuery } from "@/redux/slices/ApiSlice";
 
 const Prodatcpage = () => {
   const { data, isLoading } = useGetAllProductsQuery();
-  console.log("rtq", data?.data);
 
 
  if (isLoading) {
