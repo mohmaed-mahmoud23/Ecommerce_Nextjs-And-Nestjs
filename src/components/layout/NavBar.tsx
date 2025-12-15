@@ -21,6 +21,7 @@ export default function NavbarMinimal() {
     { name: "Home", href: "/" },
     { name: "Products", href: "/ProdactPage" },
     { name: "Cart", href: "/cart" },
+    { name: "categoris", href: "/categoris" },
   ];
 
   const handleCartClick = () => {

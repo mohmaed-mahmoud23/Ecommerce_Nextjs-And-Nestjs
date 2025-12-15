@@ -48,10 +48,11 @@ export default function Home() {
               Shop Now
             </Button>
           </Link>
-
-          <Button className="px-7 py-6 bg-white text-black font-semibold rounded-xl hover:bg-black hover:text-white shadow transition-all duration-300">
-            Browse Categories
-          </Button>
+          <Link href={"/categoris"}>
+            <Button className="px-7 py-6 bg-white text-black font-semibold rounded-xl hover:bg-black hover:text-white shadow transition-all duration-300">
+              Browse Categories
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

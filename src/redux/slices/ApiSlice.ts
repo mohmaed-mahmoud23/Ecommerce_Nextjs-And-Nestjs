@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { ProductsResponse, SingleProductResponse } from '@/types/ApiResponse';
+import type { CategoriesResponse, ProductsResponse, SingleProductResponse } from '@/types/ApiResponse';
 import { AddToCartResponse, GetUserCartResponse } from '@/interfaces/Cart';
 import { AddAddressResponse } from '@/interfaces/Addres';
 import { getSession } from "next-auth/react";
 import { Order } from '@/interfaces/Order';
+import { Category } from '@/interfaces/Category';
 
 export const ApiSlice = createApi({
   reducerPath: 'productsApi',
-  tagTypes: ["Product", "Cart", "Order"], // 👈 ضيف Order
+  tagTypes: ["Product", "Cart", "Order","Categories"], // 👈 ضيف Order
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ecommerce.routemisr.com/api/v1',
 
@@ -30,9 +31,18 @@ export const ApiSlice = createApi({
   endpoints: (builder) => ({  
     // كل المنتجات
     getAllProducts: builder.query<ProductsResponse, void>({
-      query: () => '/products',
+      query: () => '/categories',
       providesTags: ['Product'],
     }),
+
+
+
+getallcategori: builder.query<CategoriesResponse, void>({
+  query: () => "/categories",
+  providesTags: ["Categories"],
+}),
+
+    
 
     // منتج واحد    
     getsingelprodact: builder.query<SingleProductResponse, string>({
@@ -150,4 +160,5 @@ export const {
  useUpdateCartItemCountMutation,
  useAddAddressMutation,
  useGetUserorderQuery,
+ useGetallcategoriQuery
   } = ApiSlice;
