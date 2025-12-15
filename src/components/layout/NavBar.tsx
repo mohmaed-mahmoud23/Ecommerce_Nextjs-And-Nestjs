@@ -200,6 +200,22 @@ export default function NavbarMinimal() {
             })}
 
             {renderMobileUserSection()}
+
+            {/* أيقونة المستخدم فقط في الموبايل */}
+            <div
+              className="flex items-center justify-center p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer"
+              onClick={() => {
+                if (!session) {
+                  toast.error("You must login first!");
+                  router.push("/auth/login");
+                  return;
+                }
+                router.push("/allorders");
+                setOpenMenu(false);
+              }}
+            >
+              <User className="w-5 h-5 text-gray-700" />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
