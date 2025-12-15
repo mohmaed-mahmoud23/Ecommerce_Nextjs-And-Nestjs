@@ -13,3 +13,10 @@ export interface Category {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Subcategory {
+  _id: string;
+  name: string;
+  slug: string;
+  category: string; // أو Category['_id'] لو حبيت تربطه
+}
