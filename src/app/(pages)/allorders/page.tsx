@@ -31,7 +31,7 @@ const Page = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-12 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen">
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 border-b-4 border-gray-300-600 pb-4 mb-10">
-        My Orders
+        My Orders : {orders.length}
       </h1>
 
       {orders.map((order) => (
