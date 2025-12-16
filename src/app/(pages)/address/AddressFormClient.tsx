@@ -74,14 +74,14 @@ const Page = () => {
 
 
 
-        const session = await getSession();
+        const session = await getSession()
 
         if (!session?.token) {
           toast.error("You must login first!");
           return;
         }
 
-        const response = await fetch(
+        const response = await fetch( 
           `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:3000`,
           {
             method: "POST",
